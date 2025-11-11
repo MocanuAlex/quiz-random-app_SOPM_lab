@@ -24,6 +24,9 @@ function App() {
   const [answers, setAnswers] = useState({});
 
   const handleAnswer = (quizIndex, optionIndex) => {
+    // Dacă există deja un răspuns, nu mai face nimic
+    if (answers[quizIndex] !== undefined) return;
+
     setAnswers(prev => ({
       ...prev,
       [quizIndex]: optionIndex,
