@@ -4,6 +4,7 @@ body, html, #root {
   padding: 0;
   font-family: Arial, sans-serif;
   background: linear-gradient(135deg, #e0e0e0, #b0b0b0);
+  position: relative;
 }
 
 .quiz-container {
@@ -43,7 +44,7 @@ body, html, #root {
 
 .progress-fill {
   height: 100%;
-  background: #4caf50;
+  background: #676767;
   width: 0%;
   transition: width 0.3s ease;
 }
@@ -133,4 +134,76 @@ input[type=button]:hover {
   width: 100%;
   margin-bottom: 5px;
   padding: 5px;
+}
+
+/* Animații pentru feedback scor */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 120px;
+  font-weight: bold;
+  transition: opacity 0.3s ease;
+}
+
+body.show-correct::before {
+  content: '+10';
+  color: rgba(76, 175, 80, 0.15);
+  animation: fadeScore 1s ease-in-out;
+}
+
+body.show-wrong::before {
+  content: '-10';
+  color: rgba(244, 67, 54, 0.15);
+  animation: fadeScore 1s ease-in-out;
+}
+
+@keyframes fadeScore {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+/* Stiluri pentru formular */
+.add-question-form label {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.add-question-form input[type="radio"] {
+  margin-right: 5px;
+}
+
+.reset-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 8px;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 6px;
+}
+
+.reset-btn:hover {
+  background-color: #1976d2;
 }
