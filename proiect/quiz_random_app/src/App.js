@@ -23,6 +23,7 @@ function App() {
   const [newOptions, setNewOptions] = useState(["",""]);
   const [correctIndex, setCorrectIndex] = useState(0);
 
+//-------------------------
   const handleAnswer = (i, idx) => {
     if (answers[i] !== undefined) return;
     const correct = idx === quizzes[i].correctAnswerIndex;
@@ -33,9 +34,10 @@ function App() {
     setScore(prev => correct ? prev + 10 : prev - 10);
     setAnswers(prev => ({ ...prev, [i]: idx }));
   };
+//-------------------------
+  const saveQuizzes = (qs) => localStorage.setItem("quizzes", JSON.stringify(qs)); //salveaza grilele
 
-  const saveQuizzes = (qs) => localStorage.setItem("quizzes", JSON.stringify(qs));
-
+  //amesteca variantele
   const handleReset = () => {
     setAnswers({});
     setScore(0);
@@ -48,6 +50,7 @@ function App() {
     saveQuizzes(shuffle(shuffled));
   };
 
+  //adaugam o grila noua in lista
   const addQuestion = (e) => {
     e.preventDefault();
     if (!newQ.trim() || newOptions.some(o => !o.trim())) return;
@@ -58,21 +61,29 @@ function App() {
     setNewQ(""); setNewOptions(["",""]); setCorrectIndex(0);
   };
 
+  //stergem una din grilele adaugate
   const deleteQuestion = (i) => {
     const updated = quizzes.filter((_, idx) => idx !== i);
     setQuizzes(updated);
     saveQuizzes(updated);
   };
 
+  //progresul in functie de cate grile au primit raspuns
   const progress = Object.keys(answers).length / quizzes.length * 100;
 
   return (
+
     <div className="quiz-container">
+
+
+
       <div className="progress-wrapper">
         <span className="progress-text">{Object.keys(answers).length}/{quizzes.length} | Scor: {score}</span>
         <div className="progress-bar"><div className="progress-fill" style={{ width: `${progress}%` }}></div></div>
         <button className="reset-btn" onClick={handleReset}>Reset</button>
       </div>
+
+
 
       {quizzes.map((q,i) => (
         <div key={i} className="single-quiz">
